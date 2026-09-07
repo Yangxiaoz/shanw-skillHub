@@ -1,0 +1,58 @@
+{
+  "tool": "skill-create/skill_audit.py",
+  "timestamp": "2026-09-07 15:38:43",
+  "skill_dir": ".",
+  "skill_name": "skill-create",
+  "request": "把 skill 生产场景做成 skill",
+  "has_blocking": false,
+  "checks": [
+    {
+      "rule": "A1",
+      "severity": "P0",
+      "status": "pass",
+      "detail": "SKILL.md 存在，frontmatter 完整"
+    },
+    {
+      "rule": "A2",
+      "severity": "P1",
+      "status": "pass",
+      "detail": "必备章节齐全且顺序正确"
+    },
+    {
+      "rule": "A3",
+      "severity": "P0",
+      "status": "pass",
+      "detail": "审查闸门完整（含分级与降级方案）"
+    },
+    {
+      "rule": "A4-placeholder",
+      "severity": "P0",
+      "status": "pass",
+      "detail": "无残留占位符/TODO/{{}}"
+    },
+    {
+      "rule": "A4-bracket",
+      "severity": "P1",
+      "status": "pass",
+      "detail": "括号配平"
+    },
+    {
+      "rule": "A5",
+      "severity": "P0",
+      "status": "pass",
+      "detail": "引用的本地文件均存在（共 2 个）"
+    },
+    {
+      "rule": "A6",
+      "severity": "P0",
+      "status": "pass",
+      "detail": "1 个 Python 脚本可编译"
+    }
+  ],
+  "summary": {
+    "total": 7,
+    "pass": 7,
+    "warn": 0,
+    "fail": 0
+  }
+}

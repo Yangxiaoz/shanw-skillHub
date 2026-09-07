@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="docx-page-size" content="A4">
+  <title>火山引擎 · 产品与销售手册</title>
+  <style>
+  /* --- 页脚居中页码 --- */
+  @page { @bottom-center { content: counter(page); } }
+
+  :root {
+    /* ---- design tokens: modern-minimal (general) ---- */
+    --typography-fontFamily-heading: PingFang SC, 苹方-简, 微软雅黑, sans-serif;
+    --typography-fontFamily-body: PingFang SC, 苹方-简, 微软雅黑, sans-serif;
+    --typography-fontSize-title: 24pt;
+    --typography-fontSize-h1: 18pt;
+    --typography-fontSize-h2: 15pt;
+    --typography-fontSize-h3: 13pt;
+    --typography-fontSize-body: 11pt;
+    --typography-fontSize-small: 9pt;
+    --typography-fontSize-caption: 9pt;
+    --typography-lineHeight-body: 1.7;
+    --typography-lineHeight-heading: 1.3;
+    --typography-fontWeight-heading: 600;
+    --typography-fontWeight-body: 400;
+    --color-primary: #2563EB;
+    --color-text: #111827;
+    --color-textSecondary: #6B7280;
+    --color-heading: #111827;
+    --color-border: #E5E7EB;
+    --color-divider: #F3F4F6;
+    --color-background: #FFFFFF;
+    --color-codeBackground: #F9FAFB;
+    --page-content-width: 15.6cm;
+    /* ---- 本地别名 ---- */
+    --fs-title: var(--typography-fontSize-title);
+    --fs-h2: var(--typography-fontSize-h2);
+    --fs-h3: var(--typography-fontSize-h3);
+    --fs-body: var(--typography-fontSize-body);
+    --fs-small: var(--typography-fontSize-small);
+    --fs-tiny: 8pt;
+    --ff-heading: var(--typography-fontFamily-heading);
+    --ff-body: var(--typography-fontFamily-body);
+    --lh-body: var(--typography-lineHeight-body);
+    --fw-heading: var(--typography-fontWeight-heading);
+    --fw-bold: 700;
+    --color-muted: var(--color-textSecondary);
+    --margin-page: 2.5cm;
+    /* ---- 间距刻度 ---- */
+    --spacing-xxs: 0.3em;
+    --spacing-xs: 0.45em;
+    --spacing-sm: 0.5em;
+    --spacing-ms: 0.6em;
+    --spacing-08: 0.8em;
+    --spacing-lg: 0.9em;
+    --spacing-xl: 1.2em;
+    --spacing-2xl: 1.4em;
+    --spacing-3xl: 1.5em;
+    --spacing-4xl: 1.8em;
+    --spacing-5xl: 2.4em;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--ff-body); font-size: var(--fs-body); line-height: var(--lh-body);
+    color: var(--color-text); background: var(--color-background);
+    max-width: var(--page-content-width); margin-left: auto; margin-right: auto;
+  }
+
+  section[role="body"] { padding: 0; }
+
+  /* ---- 标题区（首页顶部，不占整页） ---- */
+  .doc-title {
+    text-align: center; font-family: var(--ff-heading); font-size: var(--fs-title);
+    font-weight: var(--fw-heading); color: var(--color-heading);
+    margin-bottom: var(--spacing-sm);
+  }
+  .doc-subtitle {
+    text-align: center; font-family: var(--ff-body); font-size: var(--fs-small);
+    color: var(--color-muted); margin-bottom: var(--spacing-xxs);
+  }
+  .doc-meta {
+    text-align: center; font-family: var(--ff-body); font-size: var(--fs-small);
+    color: var(--color-muted); padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border); margin-bottom: var(--spacing-xl);
+  }
+
+  /* ---- 章节标题：纯文字 + 细底线 ---- */
+  h2.section-header {
+    font-family: var(--ff-heading); font-size: var(--fs-h2);
+    font-weight: var(--fw-heading); color: var(--color-heading);
+    padding-bottom: var(--spacing-xxs); border-bottom: 1px solid var(--color-border);
+    margin: var(--spacing-5xl) 0 var(--spacing-lg) 0; text-align: left;
+  }
+  h2.section-header.first { margin-top: 0; }
+
+  /* ---- 小节标题 ---- */
+  h3.sub-header {
+    font-family: var(--ff-heading); font-size: var(--fs-h3);
+    font-weight: var(--fw-heading); color: var(--color-heading);
+    margin: var(--spacing-xl) 0 var(--spacing-xs) 0; text-align: left;
+  }
+
+  .section-body p {
+    font-family: var(--ff-body); font-size: var(--fs-body); color: var(--color-text);
+    margin-bottom: var(--spacing-ms); text-align: justify; line-height: var(--lh-body);
+  }
+  .section-body ul, .section-body ol { padding-left: var(--spacing-2xl); margin-bottom: var(--spacing-ms); }
+  .section-body li {
+    font-family: var(--ff-body); font-size: var(--fs-body); color: var(--color-text);
+    margin-bottom: var(--spacing-xs); text-align: left; line-height: var(--lh-body);
+  }
+
+  /* ---- 表格：细线、无底色 ---- */
+  table.data-table { width: 100%; border-collapse: collapse; margin: var(--spacing-ms) 0 var(--spacing-lg) 0; }
+  table.data-table th, table.data-table td {
+    border: 1px solid var(--color-border); padding: var(--spacing-xs) var(--spacing-ms);
+    font-family: var(--ff-body); font-size: var(--fs-small); color: var(--color-text);
+    text-align: left; vertical-align: top; line-height: 1.5;
+  }
+  table.data-table th { font-weight: var(--fw-heading); color: var(--color-heading); background: var(--color-codeBackground); }
+  table.data-table tr.hl-row td { font-weight: var(--typography-fontWeight-heading, 600); }
+
+  /* ---- 单段落提示：细左边框 ---- */
+  p.note-line {
+    font-family: var(--ff-body); font-size: var(--fs-body); color: var(--color-text);
+    text-align: justify; line-height: var(--lh-body);
+    border-left: 2px solid var(--color-border);
+    padding: var(--spacing-xxs) var(--spacing-08); margin: var(--spacing-ms) 0 var(--spacing-lg) 0;
+  }
+
+  /* ---- 尾注 ---- */
+  .data-note {
+    font-family: var(--ff-body); font-size: var(--fs-tiny); color: var(--color-muted);
+    text-align: left; margin-top: var(--spacing-3xl); padding-top: var(--spacing-ms);
+    border-top: 1px solid var(--color-border); line-height: 1.5;
+  }
+  </style>
+</head>
+<body>
+
+  <section role="body">
+
+    <h1 class="doc-title">火山引擎 · 产品与销售手册</h1>
+    <p class="doc-subtitle">字节跳动旗下云与 AI 服务平台</p>
+    <p class="doc-meta">B2B 销售参考 · 数据截至 2026 年 8 月 · 营收与份额为第三方机构估算口径</p>
+
+    <h2 class="section-header first">速览</h2>
+    <div class="section-body">
+      <table class="data-table">
+        <thead>
+          <tr><th>指标</th><th>数值</th><th>口径</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>2024 年营收</td><td>约 120–125 亿元</td><td>券商估算，非官方</td></tr>
+          <tr><td>同比增速</td><td>超过 60%</td><td>高于国内多数云厂商</td></tr>
+          <tr><td>公有云 MaaS 份额</td><td>约 49%，第一</td><td>IDC，2025H1</td></tr>
+          <tr><td>大模型业务 ARR</td><td>40 亿美元</td><td>火山大模型业务整体口径（含豆包全系，非 Seedance 单模型），2026-07 媒体测算</td></tr>
+        </tbody>
+      </table>
+      <p>火山引擎以豆包大模型为核心，卖三样东西：模型能力（MaaS，按 Token 计费）、算力和云基础设施、应用层平台。销售以直销为主；MaaS 是公司在 FORCE 大会等公开场合明确的首要业务重点，券商分析普遍认为其毛利是传统 GPU 租赁的数倍。</p>
+    </div>
+
+    <h2 class="section-header">一、公司简介</h2>
+    <div class="section-body">
+      <p><strong>是什么</strong>：火山引擎是字节跳动旗下的云与 AI 服务平台，2020 年 6 月上线，2021 年底进入公有云市场，2023 年 6 月上线大模型服务平台「火山方舟」后重心全面转向 AI 云。对外口径是「你的 AI 云」。</p>
+      <p><strong>为什么存在</strong>：企业都想用大模型，但自建门槛高——要凑算力、养算法团队、解决工程落地。火山引擎把字节内部打磨好的模型和基础设施直接外卖：客户不用建，调用就行，按用量付费。</p>
+      <p><strong>母公司逻辑</strong>：字节内部 50 多个业务场景（抖音、豆包、红果等）给模型做了实战打磨；内部业务与外部客户共用一个算力资源池，成本被海量内部业务摊薄，这是敢打价格战的底牌；据公开报道，集团层面已把 MaaS 定义为基础业务，销售和市场资源向它倾斜。</p>
+      <p><strong>公司现状</strong>：2026 年 7 月底完成组织整合——飞书销售体系并入火山引擎，成立统一的 To B 销售组织「创造力服务平台」，由火山引擎负责人谭待统管，一套体系同时卖 MaaS 和 SaaS。客户盘子：超 100 万企业和个人在用其大模型服务，覆盖 100 多个行业（公司公开口径，FORCE 大会披露）。</p>
+    </div>
+
+    <h2 class="section-header">二、核心概念速通</h2>
+    <div class="section-body">
+      <p>看懂后面的产品线和竞争格局，先过这两张表：一张对比新旧云生意模式，一张扫盲高频术语。</p>
+      <table class="data-table">
+        <thead>
+          <tr><th>传统云资源租赁</th><th>MaaS 模型即服务（火山主推）</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>按服务器/GPU 规格付费，客户自己搭环境</td><td>按调用量（Token）计费，开通即用</td></tr>
+          <tr><td>一次性买断或包年包月</td><td>用量随业务增长自然扩张</td></tr>
+          <tr><td>毛利薄，价格战打得辛苦</td><td>毛利是 GPU 租赁的数倍</td></tr>
+          <tr><td>客户迁移成本高，存量粘性强</td><td>换模型供应商只需改 API，靠效果和价格留人</td></tr>
+        </tbody>
+      </table>
+      <table class="data-table">
+        <thead>
+          <tr><th>术语</th><th>是什么</th><th>对销售意味着什么</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Token</td><td>模型处理文本的计量单位，约等于半个到一个汉字</td><td>计费基础。谈单时一切用量、成本、增长都折算成 Token</td></tr>
+          <tr><td>MaaS</td><td>Model as a Service，通过 API 调用现成模型</td><td>公司公开表述的首要业务重点，毛利高数倍</td></tr>
+          <tr><td>推理 / 精调</td><td>推理=调用现成模型；精调=用自己的数据定制模型</td><td>精调需求=客单价更高的深度合作信号</td></tr>
+          <tr><td>Agent / 智能体</td><td>能自主执行多步任务的 AI 应用形态</td><td>2025–2026 最热赛道，扣子/HiAgent/ArkClaw 都在这条线上</td></tr>
+          <tr><td>上下文缓存（KV Cache）</td><td>让模型记住上文、减少重复计算的技术</td><td>火山推理成本低于行业的主要原因之一，低价的底气</td></tr>
+          <tr><td>免费额度</td><td>方舟上每款豆包模型 50 万 Tokens 免费，企业协作计划 500 万</td><td>POC 敲门砖，让客户零成本跑分对比</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="section-header">三、重点 AI 产品：豆包大模型与 Seedance</h2>
+    <div class="section-body">
+      <p>这一章讲最常被问到的三件事：豆包家族怎么分线、Seedance 2.0 强在哪、红果和火山引擎是什么关系。</p>
+      <h3 class="sub-header">豆包大模型家族（基座，按模态分四条线）</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>模型线</th><th>功能</th><th>主要场景</th><th>客户群体</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>豆包 2.1（语言）</td>
+            <td>对话、推理、编码、Agent；聚焦 Coding / Agent / VLM 三大生产级场景；Terminal Bench 2.1 接近 Claude Opus 4.7，SciCode 59.8 超越 Opus 4.7 与 GPT-5.5；Pro 版成本较 Opus 4.7 低约 80%，Turbo 版再减半（2026-06 FORCE 发布）</td>
+            <td>知识问答、客服、编程（TRAE）、行业 Agent</td>
+            <td>全行业开发者与企业技术团队</td>
+          </tr>
+          <tr>
+            <td>Seedance 2.0（视频）</td>
+            <td>多模态音视频联合生成，见下文专讲</td>
+            <td>影视、广告、电商、短剧漫剧</td>
+            <td>内容制作方</td>
+          </tr>
+          <tr>
+            <td>Seedream 5.0（图像）</td>
+            <td>图像生成与编辑，4K 超清（2026-02 Preview）</td>
+            <td>电商素材、广告创意、设计</td>
+            <td>电商、营销、设计团队</td>
+          </tr>
+          <tr>
+            <td>语音与视觉理解</td>
+            <td>语音识别 2.0、实时语音、视觉理解模型</td>
+            <td>座舱语音、会议纪要、内容审核</td>
+            <td>车企、办公协同</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 class="sub-header">Seedance 2.0 — 视频生成旗舰（2026-02-12 发布）</h3>
+      <p>已全面接入豆包 App、即梦，上线火山方舟（模型名 Doubao-Seedance-2.0），API 同月开放。能力要点：</p>
+      <ul>
+        <li><strong>统一多模态音视频联合生成架构</strong>：文字、图片、音频、视频四种输入可混合（一次最多 9 张图 + 3 段视频 + 3 段音频 + 自然语言指令），模型可参考素材的构图、运镜、动作、音效</li>
+        <li><strong>15 秒多镜头音视频一次生成</strong>：双声道立体声，音画同步，台词、音效、配乐与画面严丝合缝</li>
+        <li><strong>复杂运动与物理规律 SOTA</strong>：多人交互、高难度动作不崩坏，特写镜头物理逻辑接近实拍</li>
+        <li><strong>新增视频编辑和视频延长</strong>：能对指定片段、角色、剧情定向修改，还能「接着拍」</li>
+        <li><strong>原生 4K 10-bit 直出</strong>（2026-06 FORCE 大会披露）</li>
+      </ul>
+      <p>两个标志性信号（谈客户时最好用）：</p>
+      <ol>
+        <li><strong>从玩具变生产力</strong>：Seedance 2.0 之前，视频生成工具周末调用量远高于工作日（UGC 娱乐属性）；2.0 落地后工作日使用反超周末——说明它进入了办公生产场景。已在影视创作、广告、电商营销规模化落地。</li>
+        <li><strong>央视春晚背书</strong>：2026 年春晚多个节目的视觉制作在正式发布前就用了内测版。</li>
+      </ol>
+      <p>客户/使用方：影视与短剧制作公司、广告营销公司、电商平台、MCN 与内容工作室。</p>
+
+      <h3 class="sub-header">与红果短剧的关系</h3>
+      <p>红果短剧是字节旗下的免费短剧平台（2025 上半年自制剧业务增速 174%，播放时长增速 144%，剧本侧总分账 2.2 亿元）。和火山引擎的关系分三层：</p>
+      <ol>
+        <li><strong>内部练兵场</strong>：红果等字节内容业务先用豆包和 Seedance 跑通全流程，能力验证后再外卖——这就是「字节内部 50+ 场景实战打磨」的具体内容之一。</li>
+        <li><strong>生态捆绑销售</strong>：火山引擎 AI-Solution 设「AI+短剧专项」——客户用豆包大模型做短剧，能同时拿到红果短剧、番茄小说的 IP 授权、流量扶持和资金补贴。V-START 加速器 2025-08 起公开招募「AI 短剧合作计划」，条件就是接入豆包大模型 + 具备 AI 短剧制作能力，权益含爆款 IP 授权、专项补贴、头部平台流量。</li>
+        <li><strong>漫剧流水线</strong>：番茄小说开放 6 万+ 部 IP → 豆包做小说到剧本、分镜的改编 → 即梦等工具生成画面 → 火山引擎提供算力 → 红果/抖音分发 → 巨量引擎投流。字节在这条线上收三道钱：版权收益、算力费用、投流分成。漫剧行业半年流水翻 12 倍、投流日耗破 400 万元/天（巨量引擎，2025-08）。</li>
+      </ol>
+      <p class="note-line">&nbsp;&nbsp;差异化逻辑：内容行业客户买的不只是模型——红果的分发渠道和番茄的 IP 库是阿里云、腾讯云给不了的组合，这是火山在内容赛道最核心的差异化点。</p>
+    </div>
+
+    <h2 class="section-header">四、四大应用场景</h2>
+    <div class="section-body">
+      <table class="data-table">
+        <thead>
+          <tr><th>场景</th><th>是什么</th><th>典型客户</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>智能座舱</td>
+            <td>车机语音助手从「命令式」升级为「对话式」，多模态交互</td>
+            <td>中国超九成主流车企（公司公开口径）：奔驰（CLA 接入豆包）、宝马、比亚迪、奥迪、小米、广汽</td>
+          </tr>
+          <tr>
+            <td>智能终端助手</td>
+            <td>手机、硬件设备的端侧+云端 AI 助手</td>
+            <td>全球 Top10 手机厂商中的 9 家（公司公开口径）：三星、荣耀、小米、vivo、OPPO、联想</td>
+          </tr>
+          <tr>
+            <td>内容生成与营销</td>
+            <td>视频（Seedance 2.0）、图像（Seedream）、文案的批量生成；漫剧、短剧、广告素材</td>
+            <td>互联网、消费、电商公司；短剧/漫剧制作方（可捆绑红果分发+番茄 IP）</td>
+          </tr>
+          <tr>
+            <td>企业智能体与办公</td>
+            <td>知识库问答、智能客服、销售助手、办公 Agent</td>
+            <td>中大型企业；ArkClaw 企业版原生接入飞书，飞书存量客户是天然入口</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="section-header">五、核心产品竞品全景</h2>
+    <div class="section-body">
+      <p>这一章按产品线拆竞品——卖哪个产品，就把哪一行对手的研究做透。视频生成（Seedance）是火山目前最强势、差异化最明显的赛道，单列最细。</p>
+
+      <h3 class="sub-header">视频生成：Seedance 2.0</h3>
+      <p>国内 AI 视频已成型「字节 Seedance + 快手可灵」双寡头，按日 Token 消耗 Seedance 占超 80%、可灵约 14%（第三方行业统计，非官方口径）。即梦是字节自家 C 端产品（搭载 Seedance 模型），属协同而非外部竞品。</p>
+      <table class="data-table">
+        <thead>
+          <tr><th>竞品</th><th>客户画像</th><th>火山 Seedance 优势</th><th>火山短板 / 对方强项</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>即梦 Jimeng</td><td>字节系 C 端创作者，抖音/剪映/头条生态，月活 1352 万+，抖音日均播放超 10 亿</td><td>同源模型、流量入口最深，创作完一键分发</td><td>非外部竞品，是生态协同，不抢预算</td></tr>
+          <tr><td>可灵 Kling（快手）</td><td>专业创作者、影视特效、广告公司、海外 B 端（海外占 70%，企业客户近 5 万）</td><td>综合完成度、音画同步、小白提示词上手断档领先；ARR 约 17–20 亿美元 vs 可灵约 5 亿美元（媒体测算口径。注意：火山总裁谭待曾公开表示外界对 Seedance 收入的传闻偏高，引用时建议带「据媒体报道」前缀）</td><td>可灵在专业创作者心智、海外早入场、人物面部稳定性更强；付费意愿更高</td></tr>
+          <tr><td>通义万相 / HappyHorse（阿里）</td><td>企业商用定制、阿里云存量客户</td><td>模型+算力+云一体；综合完成度与音画同步领先</td><td>阿里开源生态最全、企业 B 端营收领跑，HappyHorse 曾登 Artificial Analysis 榜首</td></tr>
+          <tr><td>Veo（Google）</td><td>企业市场，Google Cloud 集成，媒体集团/广告公司/品牌商</td><td>中文语境、本地场景适配、性价比</td><td>Veo 企业级私有化、SLA、内容安全审核成熟；画质与物理规律领先</td></tr>
+          <tr><td>Runway</td><td>专业影视、独立创作者，API 成熟</td><td>中文场景、成本与规模优势</td><td>多镜头控制、API 成熟度仍领先</td></tr>
+          <tr><td>Sora（OpenAI）</td><td>原面向 C 端短视频，已于 2026 年初全球关停</td><td>已退出竞争</td><td>—</td></tr>
+        </tbody>
+      </table>
+      <p class="note-line">&nbsp;&nbsp;差异化逻辑：视频生成这条线，火山的核心抓手是「红果+抖音分发闭环 + 漫剧流水线」，这是可灵、阿里、Google 都给不了的；而 Runway 的多镜头控制精度仍是它守住的阵地——火山的强项在生态与成本，不在精细控制。</p>
+
+      <h3 class="sub-header">图像生成：Seedream 5.0</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>竞品</th><th>客户画像</th><th>火山优势</th><th>短板 / 对方强项</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Midjourney</td><td>设计师、插画师、创作者，审美导向</td><td>中文提示词、本土审美、API 接入方便</td><td>MJ 艺术质感与社区生态仍强</td></tr>
+          <tr><td>通义万相（阿里）</td><td>企业商用、电商设计</td><td>字节内容生态联动</td><td>阿里企业定制与云集成深</td></tr>
+          <tr><td>DALL·E / 即梦图像</td><td>OpenAI 生态用户 / 字节 C 端</td><td>中文与本地化</td><td>DALL·E 与 ChatGPT 生态绑定</td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="sub-header">语言大模型：豆包 2.1</h3>
+      <p>豆包 2026 年国内市占率约 18.2% 居首（第三方榜单口径，2026-03；C 端月活 3.15 亿，QuestMobile）。</p>
+      <table class="data-table">
+        <thead>
+          <tr><th>竞品</th><th>客户画像</th><th>火山优势</th><th>短板 / 对方强项</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>通义千问 Qwen（阿里）</td><td>企业级全能，开源生态，阿里云客户</td><td>多模态、抖音生态联动、C 端规模</td><td>阿里开源最全、B 端营收领跑</td></tr>
+          <tr><td>DeepSeek</td><td>开发者、技术团队，代码/推理场景</td><td>中文理解、多模态、易上手</td><td>开源、性价比极致（API 低至 GPT 1%）、全球化</td></tr>
+          <tr><td>文心一言（百度）</td><td>政企、金融，私有化部署</td><td>多模态与场景融合</td><td>合规与私有化最成熟、政企关系深</td></tr>
+          <tr><td>智谱 GLM</td><td>企业级 Agent、复杂推理</td><td>多模态全栈</td><td>Agent/逻辑推理、学术口碑强</td></tr>
+          <tr><td>Kimi（月之暗面）</td><td>长文档处理、法律/金融研报</td><td>全能 + 生态</td><td>超长上下文（200 万）专精</td></tr>
+          <tr><td>混元/元宝（腾讯）</td><td>微信生态用户、社交内容</td><td>C 端规模</td><td>微信生态深度绑定、合规</td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="sub-header">智能体平台：扣子 Coze / HiAgent / ArkClaw</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>竞品</th><th>客户画像</th><th>火山优势</th><th>短板 / 对方强项</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Dify</td><td>开发者、技术团队，开源 Agent 开发</td><td>扣子 C 端规模 + HiAgent 企业级 + ArkClaw 接飞书，全栈覆盖</td><td>Dify 开源生态、开发者社区成熟</td></tr>
+          <tr><td>百度文心智能体 / 阿里百炼</td><td>企业低代码搭建</td><td>飞书存量客户天然入口</td><td>对方在政企低代码渗透早</td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="sub-header">AI 编程与智能办公：TRAE / TRAE Work</h3>
+      <p>2026 年字节把 TRAE 的 SOLO 模式升级为独立 AI 办公平台 TRAE Work（自然语言生成项目、截图转代码、基础功能免费），赛道正从「编程工具」扩展为「AI 办公 / Agentic 办公」，与阿里 Qoder（原通义灵码）直接对位。</p>
+      <table class="data-table">
+        <thead>
+          <tr><th>竞品</th><th>客户画像</th><th>火山优势</th><th>短板 / 对方强项</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Cursor</td><td>专业开发者，海外为主</td><td>中文、本土化、豆包模型加持、免费额度</td><td>Cursor 海外生态、模型选择多</td></tr>
+          <tr><td>Claude Code（Anthropic）</td><td>高阶开发者、Agent 编程</td><td>中文场景、成本</td><td>代码能力全球顶尖、Agent 编程范式开创者</td></tr>
+          <tr><td>Qoder（阿里，原通义灵码）</td><td>企业开发团队、阿里云存量客户；全球用户 500 万+，ARR 超 6000 万美元（企业营收占 70%），Gartner 企业级 AI Coding Agents 魔力象限唯一中国厂商</td><td>TRAE 国内 AI 编程市占率约 41% 居首（第三方口径）、个人版免费、中文术语解析准确率约 98%、TRAE Work 与飞书协同</td><td>Qoder 企业付费转化成熟、Quest 模式透明化自主交付、阿里云一键部署深度集成</td></tr>
+          <tr><td>腾讯 CodeBuddy</td><td>企业团队、政企合规客户、微信小程序开发者</td><td>免费策略 + 豆包模型加持</td><td>等保三级 + 私有化部署，企业合规是独门优势；微信生态绑定</td></tr>
+          <tr><td>智谱 ZCode（ADE）</td><td>Agent 重度用户、远程办公开发者</td><td>免费门槛低、生态联动</td><td>对话为中心的 ADE 范式；微信/飞书远程控制是独有差异</td></tr>
+        </tbody>
+      </table>
+
+      <h3 class="sub-header">AI 搜索：豆包搜索</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>竞品</th><th>客户画像</th><th>火山优势</th><th>短板 / 对方强项</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Perplexity</td><td>海外知识工作者，答案引擎</td><td>中文、本地数据源、生态联动</td><td>海外索引与引用生态成熟</td></tr>
+          <tr><td>秘塔（Metaso）</td><td>国内研究/法律/学术检索</td><td>字节内容生态</td><td>学术/法律垂直检索深耕</td></tr>
+        </tbody>
+      </table>
+      <p class="note-line">&nbsp;&nbsp;三句话定位（整体）：模型强（豆包全模态第一梯队）· 价格狠（豆包语言模型主力推理价降至行业 1% 左右，注意此低价叙事不适用于 Seedance——视频生成赛道 Seedance 走高端定价）· 打法新（AI 原生，用模型带云，不抢存量抢增量）。</p>
+    </div>
+
+    <h2 class="section-header">六、行业大盘情报</h2>
+    <div class="section-body">
+      <table class="data-table">
+        <thead>
+          <tr><th>指标</th><th>数值</th><th>时间与来源</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>中国日均 Token 消耗量</td><td>1000 亿 → 突破 30 万亿</td><td>2024 年初 → 2025 年 6 月底，国家数据局</td></tr>
+          <tr><td>豆包日均 Token 调用量</td><td>1200 亿 → 180 万亿</td><td>2024-05 → 2026-06，一年半增长超千倍</td></tr>
+          <tr><td>公有云大模型调用量增速</td><td>同比 +400%</td><td>2025H1，IDC</td></tr>
+          <tr><td>豆包 App 日活</td><td>超 6000 万</td><td>2025-11，QuestMobile</td></tr>
+        </tbody>
+      </table>
+      <p><strong>推导链条</strong>：</p>
+      <ol>
+        <li>AI 应用爆发（C 端豆包、B 端 Agent）→ Token 消耗量暴涨</li>
+        <li>Token 消耗 → 需要更多模型调用和算力 → MaaS 采购预算扩大</li>
+        <li>MaaS 是按用量持续付费的生意 → 客户的业务增长直接变成你的收入增长</li>
+      </ol>
+      <p class="note-line">&nbsp;&nbsp;结论：每一个新 AI 应用上线，都是一次模型采购窗口。MaaS 市场还在指数级扩张，火山占其中约一半——增量市场里抢客户，比存量市场抢客户容易得多。</p>
+    </div>
+
+    <h2 class="section-header">七、学习资源</h2>
+    <div class="section-body">
+      <ul>
+        <li><strong>火山引擎官网产品文档</strong>（volcengine.com）：全部产品线的一手资料，面试前过一遍目录</li>
+        <li><strong>火山方舟体验中心</strong>：在线跑豆包全家桶（含 Doubao-Seedance-2.0），亲手感受模型效果和响应速度</li>
+        <li><strong>豆包 App</strong>：C 端体感，月活 3 亿+ 的国民级应用长什么样；Seedance 2.0 已接入，可直接试视频生成</li>
+        <li><strong>Seedance 团队技术博客</strong>（seed.bytedance.com）：模型发布一手解读</li>
+        <li><strong>Gartner《AI 应用开发平台魔力象限》（2025）、IDC《中国大模型公有云服务市场分析》</strong>：份额和排名的权威引用来源</li>
+        <li><strong>FORCE 原动力大会 keynote 回放</strong>：公司战略的一手表达，直接引述高管原话最显内行</li>
+      </ul>
+
+      <p class="data-note">数据说明：营收、份额均为非上市公司估算或第三方机构口径（华福证券、东方证券、IDC、Omdia、Gartner、国家数据局、QuestMobile、巨量引擎及公开媒体报道），数据截至 2026 年 8 月，对外引用时建议注明来源。</p>
+    </div>
+
+  </section>
+
+</body>
+</html>
