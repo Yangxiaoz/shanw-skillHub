@@ -35,8 +35,8 @@ for _stream in (sys.stdout, sys.stderr):
     except (AttributeError, ValueError):
         pass
 
-# 不属于 skill 的根级目录
-SKIP_DIRS = {"scripts", ".git", ".claude", "node_modules"}
+# 不属于 skill 的根级目录；点开头的隐藏目录（工具自身的配置目录等）一律跳过
+SKIP_DIRS = {"scripts", "node_modules"}
 
 # <!-- upd:<dir> -->值<!-- /upd -->
 MARKER_RE = re.compile(r"(<!--\s*upd:([\w\-.]+)\s*-->)(.*?)(<!--\s*/upd\s*-->)")
@@ -63,7 +63,8 @@ def repo_root():
 def discover_skills(root):
     """仓库根下含 SKILL.md 的目录名，即 skill 目录名。"""
     return sorted(p.parent.name for p in root.glob("*/SKILL.md")
-                  if p.parent.name not in SKIP_DIRS)
+                  if p.parent.name not in SKIP_DIRS
+                  and not p.parent.name.startswith("."))
 
 
 def skill_labels(root, name):

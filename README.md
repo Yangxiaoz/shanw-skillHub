@@ -1,6 +1,6 @@
 # shanw-skillHub
 
-个人 skill 收录仓库。skill 是 Claude Code 的可复用指令包（`SKILL.md` + 辅助文件）；本仓库每个 skill 子目录是一个独立可取的 skill，结构统一、带审查闸门，可单独复制到其他环境使用。仓库根 `scripts/` 存放仓库级维护脚本，不属于任何 skill。
+个人 skill 收录仓库。skill 是 agent 工具的可复用指令包（`SKILL.md` + 辅助文件），格式通用、不绑定具体工具；本仓库每个 skill 子目录是一个独立可取的 skill，结构统一、带审查闸门，可单独复制到任意 agent 工具使用。仓库根 `scripts/` 存放仓库级维护脚本，不属于任何 skill。
 
 ## Skill 一览（路由表）
 
@@ -22,9 +22,11 @@
 ## 使用方式
 
 1. 按上方路由表选择需要的 skill
-2. 复制整个目录到目标环境：
-   - Claude Code 个人级：`~/.claude/skills/<skill-name>/`
-   - 项目级：`<project>/.claude/skills/<skill-name>/`
+2. 把整个目录复制到目标 agent 工具的 skill 目录，一般分两级：
+   - 个人级：对该工具全局生效
+   - 项目级：仅对当前项目生效
+
+   具体路径各工具自有约定，以所用工具的文档为准
 3. 在本仓库工作区中也可直接使用
 
 ## 收录标准与维护约定
