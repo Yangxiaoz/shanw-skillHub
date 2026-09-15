@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-skill-create · 交付前自审闸门 · 自动化校验脚本（仅标准库）
+skillHub · 收录前结构自审 · 自动化校验脚本（仅标准库）
 
-校验一个产出的 skill 目录，覆盖 SKILL.md Step 5 的【A 类】规则：
+校验一个待收录的 skill 目录，覆盖【A 类】结构规则：
   A1 SKILL.md 存在；frontmatter 完整（name/title/description 非空）
   A2 必备章节齐全且顺序正确（触发词 → 工作流 → 内容铁律 → 参考文件 → 与既有 skill 的关系）
   A3 审查闸门完整（工作流内含「审查闸门」+ P0/P1 分级 + 降级方案）
@@ -15,7 +15,7 @@ skill-create · 交付前自审闸门 · 自动化校验脚本（仅标准库）
     合法写着 TODO / {{}} 这类字样），只匹配强信号形式：
     {{xxx}} 非空模板 / TODO： / FIXME： / TBD： / 未填写 / 待补充 / 待完善 / <<< / >>>。
 
-LLM 部分（B / C / D / E）由 agent 按 SKILL.md 5.2 清单自我审查后合并。
+LLM 部分（可执行性 / 一致性 / 需求一致性 / 边界）由 agent 自行审查后合并。
 
 退出码：0 = 无阻断（pass / warn 均可）；2 = 有 fail（has_blocking=True）
 """
@@ -180,7 +180,7 @@ def run_checks(skill_dir):
 
 
 def main():
-    ap = argparse.ArgumentParser(description="skill-create 交付前自审闸门（自动化部分）")
+    ap = argparse.ArgumentParser(description="skillHub 收录前结构自审（自动化部分）")
     ap.add_argument("--skill-dir", required=True, help="待审查的 skill 目录路径")
     ap.add_argument("--skill-name", default="", help="skill 名（写入记录）")
     ap.add_argument("--request", default="", help="用户原始请求（写入记录）")
@@ -197,7 +197,7 @@ def main():
     has_blocking = any(c["status"] == "fail" for c in checks)
 
     report = {
-        "tool": "skill-create/skill_audit.py",
+        "tool": "scripts/skill_audit.py",
         "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "skill_dir": str(skill_dir),
         "skill_name": args.skill_name,
